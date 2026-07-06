@@ -18,7 +18,8 @@ Each lab is organized in its own directory and includes:
 
 | Lab | Topic | Status |
 |------|-------|--------|
-| Lab 01 | Building & Packaging Java Application with Gradle | ✅ Completed |
+| Lab 01 | Testing, Building & Packaging Java Application with Gradle | ✅ Completed |
+| Lab 02 | Testing, Building & Packaging Java Application with maven  | ✅ Completed |
 
 ## Technologies
 
