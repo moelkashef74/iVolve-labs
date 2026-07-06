@@ -16,11 +16,10 @@ Each lab is organized in its own directory and includes:
 
 ## Completed Labs
 
-| Lab | Path | Topic | Status |
-|------|-------|--------|--------|
-| Lab 01 | iVolve-labs/unit-test/lab1-calc-gradle | Testing, Building & Packaging Java Application with Gradle | ✅ Completed |
-| Lab 02 | iVolve-labs/unit-test/lab2-calc-maven | Testing, Building & Packaging Java Application with maven  | ✅ Completed |
-
+| Lab | Directory | Topic | Status |
+|------|-----------|-------|--------|
+| Lab 01 | [unit-test/lab1-calc-gradle](unit-test/lab1-calc-gradle) | Testing, Building & Packaging Java Application with Gradle | ✅ Completed |
+| Lab 02 | [unit-test/lab2-calc-maven](unit-test/lab2-calc-maven) | Testing, Building & Packaging Java Application with Maven | ✅ Completed |
 ## Technologies
 
 - Linux
