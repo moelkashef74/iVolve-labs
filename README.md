@@ -4,6 +4,13 @@ This repository contains the hands-on labs and assignments completed during my *
 
 The purpose of this repository is to document my progress while gaining practical experience with DevOps tools, Cloud technologies, automation, and software development practices.
 
+## Completed Labs
+
+| Lab | Directory | Topic | Status |
+|------|-----------|-------|--------|
+| Lab 01 | [unit-test/lab1-calc-gradle](unit-test/lab1-calc-gradle) | Testing, Building & Packaging Java Application with Gradle | ✅ Completed |
+| Lab 02 | [unit-test/lab2-calc-maven](unit-test/lab2-calc-maven) | Testing, Building & Packaging Java Application with Maven | ✅ Completed |
+
 ## Repository Structure
 
 Each lab is organized in its own directory and includes:
@@ -14,12 +21,7 @@ Each lab is organized in its own directory and includes:
 - Implementation steps
 - Verification results
 
-## Completed Labs
 
-| Lab | Directory | Topic | Status |
-|------|-----------|-------|--------|
-| Lab 01 | [unit-test/lab1-calc-gradle](unit-test/lab1-calc-gradle) | Testing, Building & Packaging Java Application with Gradle | ✅ Completed |
-| Lab 02 | [unit-test/lab2-calc-maven](unit-test/lab2-calc-maven) | Testing, Building & Packaging Java Application with Maven | ✅ Completed |
 ## Technologies
 
 - Linux
