@@ -10,6 +10,7 @@ The purpose of this repository is to document my progress while gaining practica
 |------|-----------|-------|--------|
 | Lab 01 | [unit-test/lab1-calc-gradle](unit-test/lab1-calc-gradle) | Testing, Building & Packaging Java Application with Gradle | ✅ Completed |
 | Lab 02 | [unit-test/lab2-calc-maven](unit-test/lab2-calc-maven) | Testing, Building & Packaging Java Application with Maven | ✅ Completed |
+| Lab 03 | [containerization-with-docker/lab3](containerization-with-docker/lab3) | Run Java Spring Boot Application in a Docker Container | ✅ Completed |
 
 ## Repository Structure
 
