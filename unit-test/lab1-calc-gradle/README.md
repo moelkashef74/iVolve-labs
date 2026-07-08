@@ -1,11 +1,5 @@
 # Lab 01 - Building and Packaging Java Application with Gradle
 
-## Objective
-
-Learn how to build, test, package, and run a Java application using **Gradle**.
-
----
-
 ## required packages
 
 - Java 17
@@ -13,58 +7,58 @@ Learn how to build, test, package, and run a Java application using **Gradle**.
 - Git
 
 ---
-
 ## The main repo 
 
 ```bash
 git clone https://github.com/Ibrahim-Adel15/calculator-gradle.git
 ```
 
-## steps : 
 
-- Installed Gradle
-- Cloned the calculator project
-- Executed unit tests
-- Built the application
-- Generated the JAR artifact
-- Ran the application
-- Verified that the application works successfully
-
-
-
-# Run Unit Tests
+# Step 1 : Run Unit Tests
 
 ```bash
 gradle test
 ```
-## you should see this :
+### output :
 ```bash
 BUILD SUCCESSFUL in 14s
 3 actionable tasks: 3 executed
 ```
 
-# Build the Application
+#  Step 2 : Build the Application
 
 ```bash
 gradle build
 ```
-## if everythig is ok you should see this: 
+### output: 
 ```bash
 BUILD SUCCESSFUL in 2s
 7 actionable tasks: 4 executed, 3 up-to-date
 
 ```
 
-## Generated Artifact
+##  **note**:- Step 2 will generate Artifact
 
 ```text
 build/libs/calculator.jar
 ```
 
-# Run the Application
+# Step 3 : Run the Application
 
 ```bash
 java -jar build/libs/calculator.jar
 ```
+### output: 
+```bash
+Enter first number: 16
+Enter second number: 8
+a = 16.0, b = 8.0
+Sum: 24.0
+Subtract: 8.0
+Multiply: 128.0
+Divide: 2.0
+
+```
 
 ---
+
