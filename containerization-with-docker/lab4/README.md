@@ -1,22 +1,37 @@
-# Lab 04 - Run Java Spring Boot Application in a Docker Container
+# Lab 04 - Run Java Spring Boot Application in a Lightweight Docker Container
 
-## Objective
-
-Containerize a Java Spring Boot application using Docker by writing a Dockerfile, running the generated JAR file that built locally
-
----
-
-## Repository
+## Step 1: Clone the Application Source Code
 
 ```sh
 git clone https://github.com/Ibrahim-Adel15/Docker-1.git
+cd Docker-1
 ```
-
-
 
 ---
 
-## Dockerfile
+## Step 2: Build the Application Locally
+
+Build the Spring Boot application using Maven to generate the executable JAR file.
+
+```sh
+mvn package
+```
+
+Expected output:
+
+```text
+BUILD SUCCESS
+```
+
+The generated artifact will be located at:
+
+```text
+target/demo-0.0.1-SNAPSHOT.jar
+```
+
+---
+
+## Step 3: Create the Dockerfile
 
 ```dockerfile
 FROM amazoncorretto:17-alpine
@@ -27,15 +42,14 @@ COPY pom.xml .
 
 COPY target/demo-0.0.1-SNAPSHOT.jar .
 
-CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
-
 EXPOSE 8080
 
+CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
 ```
 
----
 
-## Build the Docker Image
+
+## Step 4: Build the Docker Image
 
 ```sh
 docker build -t java-app:v2 .
@@ -43,107 +57,92 @@ docker build -t java-app:v2 .
 
 ---
 
-## Verify the Image
+## Step 5: Verify the Image
 
 ```sh
 docker images
 ```
 
-**Expected Output**
+Expected output:
 
 ```text
-REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
-java-app:v2                     c3093f76b102        490MB          170MB 
+REPOSITORY   TAG    IMAGE ID       CREATED          SIZE
+java-app     v2     c3093f76b102   A few seconds    170MB
 ```
 
-> **Note:** notice here the size of the image is reduced to 49MB remember when we built the app using dockerfile the size was 670MB
+> **Note:**  
+> In **Lab 03**, the Docker image size was approximately **670 MB** because the image contained Maven, the source code, and all build dependencies.
+>
+> In this lab, the image size is reduced to approximately **170 MB** because it only contains the compiled JAR file and a lightweight Java runtime. This approach produces a much smaller production-ready image.
 
 ---
 
-## Run the Container
+## Step 6: Run a Container from the Image
 
 ```sh
 docker run -d --name container2 -p 8080:8080 java-app:v2
 ```
 
 
-
 ---
 
-## Verify the Running Container
+## Step 7: Verify the Running Container
 
 ```sh
 docker ps
 ```
 
-**Expected Output**
+Expected output:
 
 ```text
-CONTAINER ID   IMAGE   COMMAND                  STATUS
-3e8d5e7e6ab8   java-app:v2    "java -jar target/..."   Up
+CONTAINER ID   IMAGE         COMMAND                            STATUS
+3e8d5e7e6ab8   java-app:v2   "java -jar demo-0.0.1-SNAPSHOT…"   Up
 ```
 
 ---
 
-## Test the Application
+## Step 8: Test the Application
 
 Using curl:
 
-```text
+```sh
 curl localhost:8080
 ```
 
-
-
-**Expected Output**
+Expected output:
 
 ```text
 Hello from Dockerized Spring Boot!
 ```
 
-
 ---
 
-## Stop the Container
+## Step 9: Stop the Container
 
 ```sh
-docker stop container1
+docker stop container2
 ```
 
-**Expected Output**
 
-```text
-container1
-```
-
----
-
-## Remove the Container
+## Step 10: Remove the Container
 
 ```sh
 docker rm container2
 ```
 
-**Expected Output**
-
-```text
-container2
-```
 
 ---
 
-## Verify Removal
+## Step 11: Verify the Container Has Been Removed
 
 ```sh
 docker ps -a
 ```
 
-**Expected Output**
+Expected output:
 
 ```text
 CONTAINER ID   IMAGE   COMMAND   STATUS
 ```
 
 The `container2` entry should no longer appear.
-
----
