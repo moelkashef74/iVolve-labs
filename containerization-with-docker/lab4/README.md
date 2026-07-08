@@ -1,8 +1,8 @@
-# Lab 03 - Run Java Spring Boot Application in a Docker Container
+# Lab 04 - Run Java Spring Boot Application in a Docker Container
 
 ## Objective
 
-Containerize a Java Spring Boot application using Docker by writing a Dockerfile, building the application inside the image using Maven, and running the generated JAR file.
+Containerize a Java Spring Boot application using Docker by writing a Dockerfile, running the generated JAR file that built locally
 
 ---
 
@@ -19,17 +19,18 @@ git clone https://github.com/Ibrahim-Adel15/Docker-1.git
 ## Dockerfile
 
 ```dockerfile
-FROM maven:3.9.9-eclipse-temurin-17
+FROM amazoncorretto:17-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY pom.xml .
 
-RUN mvn package
+COPY target/demo-0.0.1-SNAPSHOT.jar .
+
+CMD ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar"]
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
 ```
 
 ---
@@ -37,7 +38,7 @@ CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
 ## Build the Docker Image
 
 ```sh
-docker build -t app1 .
+docker build -t java-app:v2 .
 ```
 
 ---
@@ -52,17 +53,17 @@ docker images
 
 ```text
 REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
-app1         latest    cacff8f4da0f   a few seconds    670MB
+java-app:v2                     c3093f76b102        490MB          170MB 
 ```
 
-> **Note:** notice that the image size is 670MB copare it later with the next lab
+> **Note:** notice here the size of the image is reduced to 49MB remember when we built the app using dockerfile the size was 670MB
 
 ---
 
 ## Run the Container
 
 ```sh
-docker run -d --name container1 -p 8080:8080 app1
+docker run -d --name container2 -p 8080:8080 java-app:v2
 ```
 
 
@@ -79,7 +80,7 @@ docker ps
 
 ```text
 CONTAINER ID   IMAGE   COMMAND                  STATUS
-3e8d5e7e6ab8   app1    "java -jar target/..."   Up
+3e8d5e7e6ab8   java-app:v2    "java -jar target/..."   Up
 ```
 
 ---
@@ -120,13 +121,13 @@ container1
 ## Remove the Container
 
 ```sh
-docker rm container1
+docker rm container2
 ```
 
 **Expected Output**
 
 ```text
-container1
+container2
 ```
 
 ---
@@ -143,6 +144,6 @@ docker ps -a
 CONTAINER ID   IMAGE   COMMAND   STATUS
 ```
 
-The `container1` entry should no longer appear.
+The `container2` entry should no longer appear.
 
 ---
