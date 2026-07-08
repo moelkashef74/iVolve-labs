@@ -1,22 +1,17 @@
 # Lab 03 - Run Java Spring Boot Application in a Docker Container
 
-## Objective
 
-Containerize a Java Spring Boot application using Docker by writing a Dockerfile, building the application inside the image using Maven, and running the generated JAR file.
-
----
-
-## Repository
+## Step 1: Clone the Application Source Code
 
 ```sh
 git clone https://github.com/Ibrahim-Adel15/Docker-1.git
+cd Docker-1
 ```
-
-
 
 ---
 
-## Dockerfile
+## Step 2: Create the Dockerfile
+
 
 ```dockerfile
 FROM maven:3.9.9-eclipse-temurin-17
@@ -32,9 +27,10 @@ EXPOSE 8080
 CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
 ```
 
+
 ---
 
-## Build the Docker Image
+## Step 3: Build the Docker Image
 
 ```sh
 docker build -t app1 .
@@ -42,40 +38,38 @@ docker build -t app1 .
 
 ---
 
-## Verify the Image
+## Step 4: Verify the Image
 
 ```sh
 docker images
 ```
 
-**Expected Output**
+output:
 
 ```text
 REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
 app1         latest    cacff8f4da0f   a few seconds    670MB
 ```
 
-> **Note:** notice that the image size is 670MB copare it later with the next lab
+> **Note:** Record the image size (**670 MB**) and compare it with the optimized image created in the next lab.
 
 ---
 
-## Run the Container
+## Step 5: Run a Container from the Image
 
 ```sh
 docker run -d --name container1 -p 8080:8080 app1
 ```
 
-
-
 ---
 
-## Verify the Running Container
+## Step 6: Verify the Running Container
 
 ```sh
 docker ps
 ```
 
-**Expected Output**
+Expected output:
 
 ```text
 CONTAINER ID   IMAGE   COMMAND                  STATUS
@@ -84,32 +78,29 @@ CONTAINER ID   IMAGE   COMMAND                  STATUS
 
 ---
 
-## Test the Application
+## Step 7: Test the Application
 
 Using curl:
 
-```text
+```sh
 curl localhost:8080
 ```
 
-
-
-**Expected Output**
+Expected output:
 
 ```text
 Hello from Dockerized Spring Boot!
 ```
 
-
 ---
 
-## Stop the Container
+## Step 8: Stop the Container
 
 ```sh
 docker stop container1
 ```
 
-**Expected Output**
+Expected output:
 
 ```text
 container1
@@ -117,13 +108,13 @@ container1
 
 ---
 
-## Remove the Container
+## Step 9: Remove the Container
 
 ```sh
 docker rm container1
 ```
 
-**Expected Output**
+Expected output:
 
 ```text
 container1
@@ -131,18 +122,16 @@ container1
 
 ---
 
-## Verify Removal
+## Step 10: Verify the Container Has Been Removed
 
 ```sh
 docker ps -a
 ```
 
-**Expected Output**
+Expected output:
 
 ```text
 CONTAINER ID   IMAGE   COMMAND   STATUS
 ```
 
 The `container1` entry should no longer appear.
-
----
