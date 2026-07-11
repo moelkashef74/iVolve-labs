@@ -14,6 +14,7 @@ The purpose of this repository is to document my progress while gaining practica
 | Lab 04 | [containerization-with-docker/lab4](containerization-with-docker/lab4) | Run Java Spring Boot App in a Container locally built | ✅ Completed |
 | Lab 05 | [containerization-with-docker/lab5](containerization-with-docker/lab5) | Multi-Stage Build for a Node.js App | ✅ Completed |
 | Lab 06 | [containerization-with-docker/lab6](containerization-with-docker/lab6) | Managing Docker Environment Variables Across Build and Runtime | ✅ Completed |
+| Lab 07 | [containerization-with-docker/lab7](containerization-with-docker/lab7) |  Docker Volume and Bind Mount with Nginx | ✅ Completed |
 
 ## Repository Structure
 
