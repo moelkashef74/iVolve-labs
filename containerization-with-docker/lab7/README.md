@@ -56,6 +56,8 @@ Hello from Bind Mount
 
 ```bash
 echo "\n this page has been modified" >> index.html 
+curl loacalhost:8080
+
 ```
 
 output:

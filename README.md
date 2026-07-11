@@ -15,6 +15,7 @@ The purpose of this repository is to document my progress while gaining practica
 | Lab 05 | [containerization-with-docker/lab5](containerization-with-docker/lab5) | Multi-Stage Build for a Node.js App | ✅ Completed |
 | Lab 06 | [containerization-with-docker/lab6](containerization-with-docker/lab6) | Managing Docker Environment Variables Across Build and Runtime | ✅ Completed |
 | Lab 07 | [containerization-with-docker/lab7](containerization-with-docker/lab7) |  Docker Volume and Bind Mount with Nginx | ✅ Completed |
+| Lab 08 | [containerization-with-docker/lab8](containerization-with-docker/lab8) |  Custom Docker Network for Microservices | ✅ Completed |
 
 ## Repository Structure
 
