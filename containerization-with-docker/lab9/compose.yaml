@@ -1,0 +1,25 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+       DB_HOST: db
+       DB_USER: root
+       DB_PASSWORD: 123
+    volumes:
+      - logs:/app/logs
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+       MYSQL_ROOT_PASSWORD: 123
+       MYSQL_DATABASE: ivolve
+    volumes:
+     - db_data:/var/lib/mysql
+volumes:
+  db_data:
+  logs:
+
