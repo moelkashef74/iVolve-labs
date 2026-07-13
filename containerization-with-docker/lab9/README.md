@@ -1,4 +1,4 @@
-````md
+
 # Lab 9: Containerized Node.js and MySQL Stack Using Docker Compose
 
 ## In this lab we are going to:
