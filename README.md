@@ -17,6 +17,8 @@ The purpose of this repository is to document my progress while gaining practica
 | Lab 07 | [containerization-with-docker/lab7](containerization-with-docker/lab7) |  Docker Volume and Bind Mount with Nginx | ✅ Completed |
 | Lab 08 | [containerization-with-docker/lab8](containerization-with-docker/lab8) |  Custom Docker Network for Microservices | ✅ Completed |
 | Lab 09 | [containerization-with-docker/lab9](containerization-with-docker/lab9) | Containerized Node.js and MySQL Stack Using Docker Compose | ✅ Completed |
+| Lab 10 | [k8s/lab10](k8s/lab10) | Node Isolation Using Taints in Kubernetes | ✅ Completed |
+| Lab 11 | [k8s/lab10](k8s/lab11) | Namespace Management and Resource Quota Enforcement | ✅ Completed |
 
 ## Repository Structure
 
