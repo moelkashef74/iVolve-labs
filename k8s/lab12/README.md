@@ -1,10 +1,6 @@
 # Lab 12: Managing Configuration and Sensitive Data with ConfigMaps and Secrets
 
-## Objective
-
-In this lab, you will learn how to manage application configuration and sensitive information in Kubernetes using **ConfigMaps** and **Secrets**.
-
-By the end of this lab, you will be able to:
+## Lab Requirements
 
 - Create a ConfigMap for non-sensitive configuration.
 - Create a Secret for sensitive credentials.
@@ -13,13 +9,6 @@ By the end of this lab, you will be able to:
 
 ---
 
-## Prerequisites
-
-- Kubernetes cluster running
-- `kubectl` configured
-- Basic understanding of Kubernetes resources
-
----
 
 # Step 1: Create the ConfigMap
 
@@ -40,8 +29,7 @@ data:
 ```bash
 kubectl apply -f app-conf.yaml
 ```
-
-Expected output:
+output:
 
 ```text
 configmap/app-env created
@@ -57,17 +45,11 @@ List ConfigMaps:
 kubectl get configmaps
 ```
 
-Example output:
+output:
 
 ```text
 NAME      DATA   AGE
 app-env   2      10s
-```
-
-Describe the ConfigMap:
-
-```bash
-kubectl describe configmap app-env
 ```
 
 ---
@@ -82,7 +64,7 @@ Encode the database password:
 echo -n "root" | base64
 ```
 
-Example output:
+output:
 
 ```text
 cm9vdA==
@@ -94,7 +76,7 @@ Encode the MySQL root password:
 echo -n "123" | base64
 ```
 
-Example output:
+output:
 
 ```text
 MTIz
@@ -125,7 +107,7 @@ Apply the Secret:
 kubectl apply -f app-secret.yaml
 ```
 
-Expected output:
+output:
 
 ```text
 secret/app-secrets created
@@ -141,118 +123,64 @@ List available Secrets:
 kubectl get secrets
 ```
 
-Example output:
+output:
 
 ```text
 NAME          TYPE     DATA   AGE
 app-secrets   Opaque   2      5s
 ```
 
-Describe the Secret:
-
-```bash
-kubectl describe secret app-secrets
-```
 
 Notice that Kubernetes does not display the decoded values.
 
 ---
 
-# Step 6: Decode Secret Values (Optional)
+# Step 6: inject the nodejs -app with the configmap created
 
-Retrieve the database password:
-
-```bash
-kubectl get secret app-secrets \
--o jsonpath='{.data.DB_PASSWORD}' | base64 --decode
-```
-
-Output:
-
-```text
-root
-```
-
-Retrieve the MySQL root password:
-
-```bash
-kubectl get secret app-secrets \
--o jsonpath='{.data.MYSQL_ROOT_PASSWORD}' | base64 --decode
-```
-
-Output:
-
-```text
-123
-```
-
----
-
-# Summary
-
-In this lab, you learned how to:
-
-- Create a Kubernetes ConfigMap.
-- Store application configuration separately from application code.
-- Create Kubernetes Secrets.
-- Encode sensitive values using Base64.
-- Verify ConfigMaps and Secrets using `kubectl`.
-- Decode Secret values when needed.
-
----
-
-# Files Created
-
-## app-conf.yaml
-
+app-pod.yaml
 ```yaml
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: app-env
-data:
-  DB_HOST: "db"
-  DB_USER: "root"
+kind: Pod
+metadata: 
+  name: app-pod
+  labels: 
+    app: nodejs
+
+spec:
+  containers:
+  - name: nodejs
+    image:  mosayed711/nodejs-app:v2
+    ports:
+    - containerPort: 3000
+    envFrom:
+    - configMapRef: 
+        name: app-config
+    env:
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef: 
+          name: app-secret
+          key: DB_PASSWORD
 ```
+# Step 6: inject thedb with the secret created
 
-## app-secret.yaml
-
+db-pod.yaml
 ```yaml
 apiVersion: v1
-kind: Secret
-metadata:
-  name: app-secrets
-type: Opaque
-data:
-  DB_PASSWORD: cm9vdA==
-  MYSQL_ROOT_PASSWORD: MTIz
+kind: Pod
+metadata: 
+  name: db-pod
+  labels: 
+    app: db
+
+spec:
+  containers:
+  - name: mysql
+    image: mysql
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      valueFrom:
+        secretKeyRef: 
+          name: app-secret
+          key: MYSQL_ROOT_PASSWORD
 ```
-
----
-
-# Cleanup
-
-Delete the ConfigMap:
-
-```bash
-kubectl delete configmap app-env
-```
-
-Delete the Secret:
-
-```bash
-kubectl delete secret app-secrets
-```
-
-Verify cleanup:
-
-```bash
-kubectl get configmaps
-kubectl get secrets
-```
-
----
-
-## Lab Completed
-
-You have successfully managed application configuration and sensitive data using Kubernetes **ConfigMaps** and **Secrets**.
