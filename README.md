@@ -19,6 +19,9 @@ The purpose of this repository is to document my progress while gaining practica
 | Lab 09 | [containerization-with-docker/lab9](containerization-with-docker/lab9) | Containerized Node.js and MySQL Stack Using Docker Compose | ✅ Completed |
 | Lab 10 | [k8s/lab10](k8s/lab10) | Node Isolation Using Taints in Kubernetes | ✅ Completed |
 | Lab 11 | [k8s/lab11](k8s/lab11) | Namespace Management and Resource Quota Enforcement | ✅ Completed |
+| Lab 12 | [k8s/lab12](k8s/lab12) | Managing Configuration and Sensitive Data with ConfigMaps and Secrets | ✅ Completed |
+| Lab 13 | [k8s/lab13](k8s/lab13) | Persistent Storage Setup for Application Logging | ✅ Completed |
+
 
 ## Repository Structure
 
