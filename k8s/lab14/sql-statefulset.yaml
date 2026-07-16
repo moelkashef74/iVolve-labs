@@ -20,7 +20,7 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
+              name: app-secrets
               key: MYSQL_ROOT_PASSWORD  
         ports:
         - containerPort: 3306
@@ -31,11 +31,11 @@ spec:
       - key: "node"
         operator: "Equal"
         value: "worker"
-  volumeClaimTemplate:
+  volumeClaimTemplates:
   - metadata:
       name: mysql-pvc
     spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 1Gi
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+           requests:
+               storage: 1Gi
