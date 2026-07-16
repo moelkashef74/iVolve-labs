@@ -199,7 +199,7 @@ kubectl apply -f pvc-dynamic.yaml
 Create:
 
 ```bash
-vi app.yaml
+vim app.yaml
 ```
 
 Add:

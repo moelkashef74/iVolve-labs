@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logging-app
+
+spec:
+  containers:
+  - name: app
+    image: nginx
+
+    volumeMounts:
+    - name: logs
+      mountPath: /var/log/app
+
+  volumes:
+  - name: logs
+    persistentVolumeClaim:
+      claimName: app-logs-dynamic-pvc
