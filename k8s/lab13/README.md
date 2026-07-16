@@ -251,17 +251,15 @@ app-logs-dynamic-pvc       Bound
 Check PV:
 
 ```bash
-kubectl get pv
+kubectl get pv,pvc
 ```
 
-Expected:
+output
+```bash
+persistentvolume/pvc-005a1cf8-e251-4d3e-9c64-be1ee68d7f57   1Gi        RWO            Retain           Bound    default/app-logs-dynamic-pvc   app-logs-sc    <unset>                          3m16s
 
-```
-NAME                                      STATUS
-pvc-xxxx-xxxx                             Bound
-```
-
-The PV was automatically created by the StorageClass.
+NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/app-logs-dynamic-pvc   Bound    pvc-005a1cf8-e251-4d3e-9c64-be1ee68d7f57   1Gi        RWO            app-logs-sc    <unset>                 3m22s
 
 ---
-
+```
