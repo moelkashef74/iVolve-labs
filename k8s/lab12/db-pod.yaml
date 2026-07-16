@@ -4,6 +4,7 @@ metadata:
   name: db-pod
   labels: 
     app: db
+  namespace: ivolve
 
 spec:
   containers:

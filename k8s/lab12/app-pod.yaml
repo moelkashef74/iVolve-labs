@@ -4,6 +4,7 @@ metadata:
   name: app-pod
   labels: 
     app: nodejs
+  namespace: ivolve
 
 spec:
   containers:

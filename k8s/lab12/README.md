@@ -19,6 +19,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-env
+  namespace: ivolve
 data:
   DB_HOST: "db"
   DB_USER: "root"
@@ -42,7 +43,7 @@ configmap/app-env created
 List ConfigMaps:
 
 ```bash
-kubectl get configmaps
+kubectl get configmaps -n ivolve 
 ```
 
 output:
@@ -95,6 +96,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: app-secrets
+  namespace: ivolve
 type: Opaque
 data:
   DB_PASSWORD: cm9vdA==
@@ -120,7 +122,7 @@ secret/app-secrets created
 List available Secrets:
 
 ```bash
-kubectl get secrets
+kubectl get secrets -n ivolve
 ```
 
 output:
@@ -145,6 +147,7 @@ metadata:
   name: app-pod
   labels: 
     app: nodejs
+  namespace: ivolve
 
 spec:
   containers:
@@ -162,7 +165,7 @@ spec:
           name: app-secret
           key: DB_PASSWORD
 ```
-# Step 6: inject thedb with the secret created
+# Step 7 : inject thedb with the secret created
 
 db-pod.yaml
 ```yaml
@@ -172,6 +175,7 @@ metadata:
   name: db-pod
   labels: 
     app: db
+  namespace: ivolve
 
 spec:
   containers:
