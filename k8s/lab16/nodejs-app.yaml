@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-app
+  namespace: ivolve
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-app
+    spec:
+      imagePullSecrets:
+      - name: docker-cred
+      initContainers:
+      - name: init-container
+        image: mysql:5.7
+        envFrom:
+        - configMapRef:
+            name: app-env
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: MYSQL_ROOT_PASSWORD
+        
+        command: 
+        - sh
+        - -c
+        - |
+          echo "Waiting for MySQL to be ready..."
+          until mysqladmin ping -h "$DB_HOST" --silent; do
+            sleep 2
+          done
+          echo "MySQL is ready. Running initialization script..."
+          mysql -h "$DB_HOST" -u "$DB_USER" -p"$MYSQL_ROOT_PASSWORD"  -e "CREATE DATABASE IF NOT EXISTS ivolve;"
+        
+      containers:
+      - name: nodejs-app
+        image: mosayed711/nodejs-app:v2
+        envFrom:
+        - configMapRef:
+            name: app-env
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: DB_PASSWORD
+        volumeMounts:
+        - name: app-logs
+          mountPath: "/var/log/app"
+      tolerations:
+      - key: "node"
+        operator: "Equal"
+        value: "worker"
+        effect: "NoSchedule"
+
+      volumes:
+      - name: app-logs
+        persistentVolumeClaim:
+         claimName: app-logs-pvc
