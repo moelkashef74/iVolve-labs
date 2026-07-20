@@ -22,6 +22,7 @@ The purpose of this repository is to document my progress while gaining practica
 | Lab 12 | [k8s/lab12](k8s/lab12) | Managing Configuration and Sensitive Data with ConfigMaps and Secrets | ✅ Completed |
 | Lab 13 | [k8s/lab13](k8s/lab13) | Persistent Storage Setup for Application Logging | ✅ Completed |
 | Lab 14 | [k8s/lab14](k8s/lab14) | StatefulSet with Headless Service | ✅ Completed |
+| Lab 15 | [k8s/lab15](k8s/lab15) | Node.js Application Deployment with ClusterIP service | ✅ Completed |
 
 
 ## Repository Structure

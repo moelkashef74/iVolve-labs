@@ -87,8 +87,8 @@ spec:
       labels:
         app: nodejs-app
     spec:
-      dockerimagePullSecrets:
-        name: docker-cred
+      imagePullSecrets:
+      - name: docker-cred
       containers:
       - name: nodejs-app
         image: mosayed711/nodejs-app:v2
@@ -106,21 +106,21 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: app-secret
+              name: app-secrets
               key: DB_PASSWORD
         volumeMounts:
         - name: app-logs
           mountPath: "/var/log/app"
-    tolerations:
-    - key: "node"
-      operator: "Equal"
-      value: "worker"
-      effect: "NoSchedule"
+      tolerations:
+      - key: "node"
+        operator: "Equal"
+        value: "worker"
+        effect: "NoSchedule"
 
-    volumes:
-    - name: app-logs
-      persistentVolumeClaim:
-        claimName: app-logs-pvc
+      volumes:
+      - name: app-logs
+        persistentVolumeClaim:
+         claimName: app-logs-pvc
 ```
 
 Apply the Deployment:
@@ -137,14 +137,12 @@ kubectl get deployment,pods -n ivolve
 output:
 
 ```
-DEPLOYMENT
-NAME          READY   UP-TO-DATE   AVAILABLE   AGE
-nodejs-app    1/2     2            1           30s      
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nodejs-app   2/2     2            2           97s
 
-PODS
-NAME                          READY   STATUS    RESTARTS   AGE
-nodejs-app-7bbf98fd8f-k8r8w   1/1     Running   0          30s
-nodejs-app-7bbf98fd8f-zcgkh   0/1     Pending   0          30s
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/nodejs-app-b75c8fddb-2lkms   1/1     Running   0          96s
+pod/nodejs-app-b75c8fddb-nx845   1/1     Running   0          96s
 ```
 ---
 
@@ -154,16 +152,17 @@ nodejs-app-7bbf98fd8f-zcgkh   0/1     Pending   0          30s
 Display the environment variables inside the running container.
 
 ```bash
-kubectl exec -it <running-pod-name> -n ivolve -- env
+kubectl exec -it nodejs-app-b75c8fddb-2lkms -n ivolve -- env
 ```
 
 output:
 
 ```
-PORT=3000
-DB_HOST=mysql
+...
 DB_USER=root
-DB_PASSWORD=******
+DB_PASSWORD=root
+DB_HOST=db
+...
 ```
 
 ---
@@ -171,17 +170,25 @@ DB_PASSWORD=******
 # Step 4: Verify the Persistent Volume Mount
 
 Check the mounted volume 
-
-inspect the pod:
+```bash
+kubectl describe pod nodejs-app-b75c8fddb-2lkms -n ivolve | grep -i volume -A5
+```
+```
+Volumes:
+  app-logs:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  app-logs-pvc
+    ReadOnly:   false
+```
 
 ```bash
-kubectl describe pod <running-pod-name> -n ivolve
+kubectl describe pod nodejs-app-b75c8fddb-2lkms -n ivolve | grep -i mount -A5
 ```
 
-Verify that the PVC is mounted at:
-
 ```
-/usr/src/app/data
+Mounts:
+      /var/log/app from app-logs (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-5h4fr (ro)
 ```
 
 ---
@@ -219,29 +226,10 @@ kubectl get svc -n ivolve
 output:
 
 ```
-NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
-nodejs-service   ClusterIP   10.43.142.201   <none>        80/TCP    12s
+NAME             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+nodejs-service   ClusterIP   10.96.20.218   <none>        80/TCP    27m
 ```
 
----
-
-# Step 6: Test the Service
-
-verify DNS resolution:
-
-```sh
-nslookup nodejs-service
-```
-
-output:
-
-```
-Server:    10.43.0.10
-Address 1: 10.43.0.10
-
-Name:      nodejs-service
-Address 1: 10.43.142.201
-```
 
 ---
 
@@ -256,8 +244,9 @@ kubectl get endpoints nodejs-service -n ivolve
 output:
 
 ```
-NAME             ENDPOINTS          AGE
-nodejs-service   10.42.0.15:3000    2m
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME             ENDPOINTS                              AGE
+nodejs-service   192.168.1.211:3000,192.168.1.59:3000   28m
 ```
 
 ---

@@ -14,7 +14,7 @@ spec:
         app: nodejs-app
     spec:
       imagePullSecrets:
-        name: docker-cred
+      - name: docker-cred
       containers:
       - name: nodejs-app
         image: mosayed711/nodejs-app:v2
@@ -32,7 +32,7 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: app-secret
+              name: app-secrets
               key: DB_PASSWORD
         volumeMounts:
         - name: app-logs
@@ -46,4 +46,4 @@ spec:
       volumes:
       - name: app-logs
         persistentVolumeClaim:
-        claimName: app-logs-pvc
+         claimName: app-logs-pvc
