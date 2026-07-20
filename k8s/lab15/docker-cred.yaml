@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOnsidXNlcm5hbWUiOiJtb3NheWVkNzExIiwicGFzc3dvcmQiOiJkY2tyX3BhdF9wQjhQSkh1OTQtNHk4RUc5N2lYWWtVMDdTWHciLCJlbWFpbCI6Im1obWRhbHN5ZDIwMTVAZ21haWwuY29tIiwiYXV0aCI6ImJXOXpZWGxsWkRjeE1UcGtZMnR5WDNCaGRGOXdRamhRU2toMU9UUXROSGs0UlVjNU4ybFlXV3RWTURkVFdIYz0ifX19
+kind: Secret
+metadata:
+  name: docker-cred
+  namespace: ivolve
+type: kubernetes.io/dockerconfigjson
