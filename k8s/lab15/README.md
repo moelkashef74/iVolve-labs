@@ -40,7 +40,7 @@ kubectl apply -f k8s/lab12/app-config.yaml
 - A Secret for app sensitive information.
 
 ```bash
-kubectl apply -f k8s/lab12/app-secret.yaml
+kubectl apply -f k8s/lab12/app-secrets.yaml
 ```
 
 - A statically provisioned PersistentVolume and PersistentVolumeClaim.
