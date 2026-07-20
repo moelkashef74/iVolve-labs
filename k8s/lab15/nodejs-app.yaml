@@ -13,7 +13,7 @@ spec:
       labels:
         app: nodejs-app
     spec:
-      dockerimagePullSecrets:
+      imagePullSecrets:
         name: docker-cred
       containers:
       - name: nodejs-app
@@ -37,13 +37,13 @@ spec:
         volumeMounts:
         - name: app-logs
           mountPath: "/var/log/app"
-    tolerations:
-    - key: "node"
-      operator: "Equal"
-      value: "worker"
-      effect: "NoSchedule"
+      tolerations:
+      - key: "node"
+        operator: "Equal"
+        value: "worker"
+        effect: "NoSchedule"
 
-    volumes:
-    - name: app-logs
-      persistentVolumeClaim:
+      volumes:
+      - name: app-logs
+        persistentVolumeClaim:
         claimName: app-logs-pvc

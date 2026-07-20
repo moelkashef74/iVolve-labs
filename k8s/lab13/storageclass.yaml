@@ -2,6 +2,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: app-logs-sc
+  namespace: ivolve
 
 provisioner:
   rancher.io/local-path

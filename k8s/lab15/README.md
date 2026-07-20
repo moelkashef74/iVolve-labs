@@ -22,7 +22,7 @@ kubectl create namespace ivolve
 ```
 - A resource quota named `app-quota` in the `ivolve` namespace.
 ```bash
-kubectl apply -f k8s/lab1/quota.yaml
+kubectl apply -f k8s/lab11/quota.yaml
 ```
 
 - A worker node tainted with:
