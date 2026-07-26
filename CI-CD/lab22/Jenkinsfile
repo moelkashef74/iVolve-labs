@@ -1,33 +1,38 @@
 pipeline {
     agent any
+
     environment {
         IMAGE_NAME = 'mosayed711/nodejs-app'
         IMAGE_TAG = "v2.${BUILD_NUMBER}"
         CLUSTER_NAME = 'eks-test-cluster'
         AWS_REGION = 'us-east-1'
-        APP_DEPLOYMENT='nodejs-app.yaml'
+        APP_DEPLOYMENT = 'nodejs-app.yaml'
         CLUSTER_ENDPOINT = 'https://78709925DDB4ABF9A5C4CA18988D4296.gr7.us-east-1.eks.amazonaws.com'
     }
 
     stages {
+
         stage('Running unit tests') {
             steps {
                 sh 'echo "Running unit tests..."'
                 sh 'npm test'
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 sh 'echo "Building Docker image..."'
                 sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
             }
         }
+
         stage('Test Docker Image using trivy') {
             steps {
                 sh 'echo "Testing Docker image using trivy..."'
                 sh "trivy image --exit-code 1 --severity HIGH,CRITICAL $IMAGE_NAME:$IMAGE_TAG"
             }
         }
+
         stage('Push Docker Image') {
             steps {
                 withCredentials([
@@ -37,29 +42,31 @@ pipeline {
                         passwordVariable: 'DOCKER_PASSWORD'
                     )
                 ]) {
-                sh '''
-                echo $DOCKER_PASSWORD | docker login \
-                -u $DOCKER_USERNAME \
-                --password-stdin
+                    sh '''
+                    echo $DOCKER_PASSWORD | docker login \
+                    -u $DOCKER_USERNAME \
+                    --password-stdin
 
-                docker push $IMAGE_NAME:$IMAGE_TAG
-                '''
+                    docker push $IMAGE_NAME:$IMAGE_TAG
+                    '''
+                }
+            }
         }
-    }
-}
+
         stage('Delete Docker Image') {
             steps {
                 sh 'echo "Deleting Docker image..."'
                 sh "docker rmi $IMAGE_NAME:$IMAGE_TAG"
             }
         }
-        stage ('Editing Deployment YAML') {
+
+        stage('Editing Deployment YAML') {
             steps {
                 sh 'echo "Editing deployment YAML file..."'
                 sh "sed -i 's|image: .*|image: $IMAGE_NAME:$IMAGE_TAG|' ${APP_DEPLOYMENT}"
             }
         }
-    
+
         stage('Deploy to Kubernetes') {
             steps {
                 withCredentials([
@@ -77,17 +84,19 @@ pipeline {
                 }
             }
         }
-    }   
+    }
+
     post {
-            always {
-                sh 'echo "pipeline completed."'
-            }
-            success {
-                sh 'echo "pipeline completed successfully."'
-            }
-            failure {
-                sh 'echo "pipeline failed."'
-            }   
+        always {
+            sh 'echo "pipeline completed."'
+        }
+
+        success {
+            sh 'echo "pipeline completed successfully."'
+        }
+
+        failure {
+            sh 'echo "pipeline failed."'
         }
     }
 }
