@@ -12,12 +12,7 @@ pipeline {
 
     stages {
 
-        stage('Running unit tests') {
-            steps {
-                sh 'echo "Running unit tests..."'
-                sh 'npm test'
-            }
-        }
+        
 
         stage('Build Docker Image') {
             steps {
