@@ -29,21 +29,21 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-    steps {
-        withCredentials([
-            usernamePassword(
-                credentialsId: 'dockerhub-credentials',
-                usernameVariable: 'DOCKER_USERNAME',
-                passwordVariable: 'DOCKER_PASSWORD'
-            )
-        ]) {
-            sh '''
-            echo $DOCKER_PASSWORD | docker login \
-            -u $DOCKER_USERNAME \
-            --password-stdin
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-credentials',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )
+                ]) {
+                sh '''
+                echo $DOCKER_PASSWORD | docker login \
+                -u $DOCKER_USERNAME \
+                --password-stdin
 
-            docker push $IMAGE_NAME:$IMAGE_TAG
-            '''
+                docker push $IMAGE_NAME:$IMAGE_TAG
+                '''
         }
     }
 }
@@ -61,22 +61,24 @@ pipeline {
         }
     
         stage('Deploy to Kubernetes') {
-    steps {
-        withCredentials([
-            string(credentialsId: 'k8s-token', variable: 'K8S_TOKEN')
-        ]) {
-            sh '''
-            echo "Deploying to Kubernetes..."
+            steps {
+                withCredentials([
+                    string(credentialsId: 'k8s-token', variable: 'K8S_TOKEN')
+                ]) {
+                    sh '''
+                    echo "Deploying to Kubernetes..."
 
-            kubectl apply \
-              -f ${APP_DEPLOYMENT} \
-              --server=${CLUSTER_ENDPOINT} \
-              --token=$(cat ${K8S_TOKEN})
-            '''
+                    kubectl apply \
+                    -f ${APP_DEPLOYMENT} \
+                    --server=${CLUSTER_ENDPOINT} \
+                    --token=${K8S_TOKEN} \
+                    --insecure-skip-tls-verify=true
+                    '''
+                }
+            }
         }
-    }
-}
-        post {
+    }   
+    post {
             always {
                 sh 'echo "pipeline completed."'
             }
