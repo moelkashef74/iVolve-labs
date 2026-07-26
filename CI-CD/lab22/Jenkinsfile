@@ -1,0 +1,80 @@
+pipeline {
+    agent any
+    environment {
+        IMAGE_NAME = 'mosayed711/nodejs-app'
+        IMAGE_TAG = "v2.${BUILD_NUMBER}"
+        CLUSTER_NAME = 'eks-test-cluster'
+        AWS_REGION = 'us-east-1'
+        APP_DEPLOYMENT='nodejs-app.yaml'
+        CLUSTER_ENDPOINT = 'https://78709925DDB4ABF9A5C4CA18988D4296.gr7.us-east-1.eks.amazonaws.com'
+    }
+
+    stages {
+        stage('Running unit tests') {
+            steps {
+                sh 'echo "Running unit tests..."'
+                sh 'npm test'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'echo "Building Docker image..."'
+                sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
+            }
+        }
+        stage('Test Docker Image using trivy') {
+            steps {
+                sh 'echo "Testing Docker image using trivy..."'
+                sh "trivy image $IMAGE_NAME:$IMAGE_TAG"
+            }
+        }
+        stage('push Docker Image') {
+         withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                steps {
+                    sh 'echo "Pushing Docker image to Docker Hub..."'
+                    sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
+                    sh "docker push $IMAGE_NAME:$IMAGE_TAG"
+                }
+            }
+            
+        }
+        stage('Delete Docker Image') {
+            steps {
+                sh 'echo "Deleting Docker image..."'
+                sh "docker rmi $IMAGE_NAME:$IMAGE_TAG"
+            }
+        }
+        stage ('Editing Deployment YAML') {
+            steps {
+                sh 'echo "Editing deployment YAML file..."'
+                sh "sed -i 's|image: .*|image: $IMAGE_NAME:$IMAGE_TAG|' ${APP_DEPLOYMENT}"
+            }
+        }
+        stage('connect to aws eks cluster') {
+            steps {
+                sh 'echo "Connecting to AWS EKS cluster..."'
+                sh "aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME"
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            withCredentials([file(credentialsId: 'k8s-service-account-token', variable: 'K8S_TOKEN')]) {
+                steps {
+                    sh 'echo "Deploying to Kubernetes..."'
+                    sh "kubectl apply -f ${APP_DEPLOYMENT} --server=$CLUSTER_ENDPOINT --token=$K8S_TOKEN"
+                }
+            }
+            
+        }
+        post {
+            always {
+                sh 'echo "pipeline completed."'
+            }
+            success {
+                sh 'echo "pipeline completed successfully."'
+            }
+            failure {
+                sh 'echo "pipeline failed."'
+            }   
+        }
+    }
+}
