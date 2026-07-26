@@ -5,5 +5,5 @@ metadata:
   namespace: ivolve
 rules:
 - apiGroups: [""]
-  resources: ["pods"]
+  resources: ["pods", "deployments"]
   verbs: ["get", "list"]

@@ -25,19 +25,28 @@ pipeline {
         stage('Test Docker Image using trivy') {
             steps {
                 sh 'echo "Testing Docker image using trivy..."'
-                sh "trivy image $IMAGE_NAME:$IMAGE_TAG"
+                sh "trivy image --exit-code 1 --severity HIGH,CRITICAL $IMAGE_NAME:$IMAGE_TAG"
             }
         }
-        stage('push Docker Image') {
-         withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                steps {
-                    sh 'echo "Pushing Docker image to Docker Hub..."'
-                    sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin"
-                    sh "docker push $IMAGE_NAME:$IMAGE_TAG"
-                }
-            }
-            
+        stage('Push Docker Image') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'dockerhub-credentials',
+                usernameVariable: 'DOCKER_USERNAME',
+                passwordVariable: 'DOCKER_PASSWORD'
+            )
+        ]) {
+            sh '''
+            echo $DOCKER_PASSWORD | docker login \
+            -u $DOCKER_USERNAME \
+            --password-stdin
+
+            docker push $IMAGE_NAME:$IMAGE_TAG
+            '''
         }
+    }
+}
         stage('Delete Docker Image') {
             steps {
                 sh 'echo "Deleting Docker image..."'
@@ -50,21 +59,23 @@ pipeline {
                 sh "sed -i 's|image: .*|image: $IMAGE_NAME:$IMAGE_TAG|' ${APP_DEPLOYMENT}"
             }
         }
-        stage('connect to aws eks cluster') {
-            steps {
-                sh 'echo "Connecting to AWS EKS cluster..."'
-                sh "aws eks --region $AWS_REGION update-kubeconfig --name $CLUSTER_NAME"
-            }
-        }
+    
         stage('Deploy to Kubernetes') {
-            withCredentials([file(credentialsId: 'k8s-service-account-token', variable: 'K8S_TOKEN')]) {
-                steps {
-                    sh 'echo "Deploying to Kubernetes..."'
-                    sh "kubectl apply -f ${APP_DEPLOYMENT} --server=$CLUSTER_ENDPOINT --token=$K8S_TOKEN"
-                }
-            }
-            
+    steps {
+        withCredentials([
+            string(credentialsId: 'k8s-token', variable: 'K8S_TOKEN')
+        ]) {
+            sh '''
+            echo "Deploying to Kubernetes..."
+
+            kubectl apply \
+              -f ${APP_DEPLOYMENT} \
+              --server=${CLUSTER_ENDPOINT} \
+              --token=$(cat ${K8S_TOKEN})
+            '''
         }
+    }
+}
         post {
             always {
                 sh 'echo "pipeline completed."'
