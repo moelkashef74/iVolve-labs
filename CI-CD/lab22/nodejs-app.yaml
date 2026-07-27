@@ -17,7 +17,7 @@ spec:
       - name: docker-cred
       initContainers:
       - name: init-container
-        image: mysql:8.0
+        image: mysql:latest
         envFrom:
         - configMapRef:
             name: app-env
