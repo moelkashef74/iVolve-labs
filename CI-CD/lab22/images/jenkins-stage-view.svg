@@ -1,0 +1,44 @@
+<svg viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1000" height="220" fill="#ffffff"/>
+  <rect x="0" y="0" width="1000" height="46" fill="#335061"/>
+  <text x="20" y="30" fill="#ffffff" font-size="18" font-weight="bold">nodejs-app-pipeline</text>
+  <text x="850" y="30" fill="#c9d6dd" font-size="13">Build #14</text>
+
+  <text x="20" y="75" fill="#333333" font-size="14" font-weight="bold">Stage View</text>
+
+  <g font-size="11" text-anchor="middle">
+    <rect x="20" y="90" width="150" height="55" rx="4" fill="#c9e6ca" stroke="#3c9a3f" stroke-width="1.5"/>
+    <text x="95" y="112" fill="#1e4620" font-weight="bold">Build Docker</text>
+    <text x="95" y="128" fill="#1e4620">Image</text>
+    <text x="95" y="142" fill="#1e4620" font-size="10">22s</text>
+
+    <rect x="185" y="90" width="150" height="55" rx="4" fill="#c9e6ca" stroke="#3c9a3f" stroke-width="1.5"/>
+    <text x="260" y="106" fill="#1e4620" font-weight="bold">Test Image</text>
+    <text x="260" y="120" fill="#1e4620">using</text>
+    <text x="260" y="134" fill="#1e4620">trivy</text>
+    <text x="260" y="147" fill="#1e4620" font-size="10">31s</text>
+
+    <rect x="350" y="90" width="150" height="55" rx="4" fill="#c9e6ca" stroke="#3c9a3f" stroke-width="1.5"/>
+    <text x="425" y="112" fill="#1e4620" font-weight="bold">Push Docker</text>
+    <text x="425" y="128" fill="#1e4620">Image</text>
+    <text x="425" y="142" fill="#1e4620" font-size="10">18s</text>
+
+    <rect x="515" y="90" width="150" height="55" rx="4" fill="#c9e6ca" stroke="#3c9a3f" stroke-width="1.5"/>
+    <text x="590" y="112" fill="#1e4620" font-weight="bold">Delete Docker</text>
+    <text x="590" y="128" fill="#1e4620">Image</text>
+    <text x="590" y="142" fill="#1e4620" font-size="10">1s</text>
+
+    <rect x="680" y="90" width="150" height="55" rx="4" fill="#c9e6ca" stroke="#3c9a3f" stroke-width="1.5"/>
+    <text x="755" y="112" fill="#1e4620" font-weight="bold">Editing</text>
+    <text x="755" y="128" fill="#1e4620">Deployment YAML</text>
+    <text x="755" y="142" fill="#1e4620" font-size="10">1s</text>
+
+    <rect x="845" y="90" width="140" height="55" rx="4" fill="#c9e6ca" stroke="#3c9a3f" stroke-width="1.5"/>
+    <text x="915" y="112" fill="#1e4620" font-weight="bold">Deploy to</text>
+    <text x="915" y="128" fill="#1e4620">Kubernetes</text>
+    <text x="915" y="142" fill="#1e4620" font-size="10">9s</text>
+  </g>
+
+  <text x="20" y="180" fill="#3c9a3f" font-size="13" font-weight="bold">✓ Success — all 6 stages passed</text>
+  <text x="20" y="202" fill="#888888" font-size="11">Illustrative mockup of Jenkins Stage View — not an actual captured screenshot.</text>
+</svg>

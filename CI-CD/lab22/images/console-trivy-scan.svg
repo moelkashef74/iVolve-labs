@@ -1,0 +1,23 @@
+<svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" font-family="Consolas, Menlo, monospace">
+  <rect width="900" height="260" fill="#1e1e1e" rx="6"/>
+  <rect x="0" y="0" width="900" height="28" fill="#333333" rx="6"/>
+  <circle cx="16" cy="14" r="5" fill="#ff5f56"/>
+  <circle cx="34" cy="14" r="5" fill="#ffbd2e"/>
+  <circle cx="52" cy="14" r="5" fill="#27c93f"/>
+  <text x="450" y="19" fill="#cccccc" font-size="12" text-anchor="middle">Console Output — Stage: Test Docker Image using trivy</text>
+
+  <g fill="#d4d4d4" font-size="12.5">
+    <text x="16" y="52">+ trivy image --cache-dir /tmp/trivy-cache --timeout 10m \</text>
+    <text x="30" y="70">--scanners vuln --severity HIGH,CRITICAL mosayed711/nodejs-app:v2.14</text>
+    <text x="16" y="98" fill="#9cdcfe">2026-07-27T10:03:12Z INFO Vulnerability scanning is enabled</text>
+    <text x="16" y="116" fill="#9cdcfe">2026-07-27T10:03:14Z INFO Detected OS: alpine</text>
+
+    <text x="16" y="146" fill="#f2f2f2">mosayed711/nodejs-app:v2.14 (alpine 3.19.1)</text>
+    <text x="16" y="164" fill="#dcdcaa">Total: 2 (HIGH: 2, CRITICAL: 0)</text>
+    <text x="16" y="184" fill="#ce9178">libssl3   HIGH   CVE-2024-XXXXX   3.1.4-r0 → 3.1.5-r0</text>
+    <text x="16" y="202" fill="#ce9178">busybox   HIGH   CVE-2024-YYYYY   1.36.1-r0 → 1.36.2-r0</text>
+
+    <text x="16" y="232" fill="#6a9955">[Pipeline] // stage — Finished: SUCCESS</text>
+  </g>
+  <text x="16" y="252" fill="#777777" font-size="10">Illustrative mockup — not an actual captured screenshot.</text>
+</svg>

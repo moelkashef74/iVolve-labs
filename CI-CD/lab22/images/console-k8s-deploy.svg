@@ -1,0 +1,22 @@
+<svg viewBox="0 0 900 240" xmlns="http://www.w3.org/2000/svg" font-family="Consolas, Menlo, monospace">
+  <rect width="900" height="240" fill="#1e1e1e" rx="6"/>
+  <rect x="0" y="0" width="900" height="28" fill="#333333" rx="6"/>
+  <circle cx="16" cy="14" r="5" fill="#ff5f56"/>
+  <circle cx="34" cy="14" r="5" fill="#ffbd2e"/>
+  <circle cx="52" cy="14" r="5" fill="#27c93f"/>
+  <text x="450" y="19" fill="#cccccc" font-size="12" text-anchor="middle">Console Output — Stage: Deploy to Kubernetes (EKS)</text>
+
+  <g fill="#d4d4d4" font-size="12">
+    <text x="16" y="52">+ kubectl apply -f CI-CD/lab22/nodejs-app.yaml \</text>
+    <text x="30" y="70">--server=https://78709925DDB4ABF9A5C4CA18988D4296.gr7.us-east-1.eks.amazonaws.com \</text>
+    <text x="30" y="88">--token=$K8S_TOKEN --insecure-skip-tls-verify=true</text>
+
+    <text x="16" y="118" fill="#dcdcaa">deployment.apps/nodejs-app configured</text>
+
+    <text x="16" y="150" fill="#9cdcfe">Warning: --insecure-skip-tls-verify is used with</text>
+    <text x="16" y="166" fill="#9cdcfe">--server; the server's certificate will not be checked</text>
+
+    <text x="16" y="196" fill="#6a9955">[Pipeline] // stage — Finished: SUCCESS</text>
+  </g>
+  <text x="16" y="230" fill="#777777" font-size="10">Illustrative mockup — not an actual captured screenshot.</text>
+</svg>

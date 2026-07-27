@@ -1,0 +1,71 @@
+<svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1000" height="560" fill="#0f172a"/>
+  <text x="500" y="40" text-anchor="middle" fill="#f8fafc" font-size="24" font-weight="bold">AWS Infrastructure — Terraform + Ansible + EKS + Jenkins</text>
+
+  <!-- Terraform box -->
+  <rect x="40" y="80" width="220" height="140" rx="10" fill="#1e293b" stroke="#7c3aed" stroke-width="2"/>
+  <text x="150" y="110" text-anchor="middle" fill="#c4b5fd" font-size="16" font-weight="bold">Terraform</text>
+  <text x="150" y="135" text-anchor="middle" fill="#e2e8f0" font-size="12">Provisions:</text>
+  <text x="150" y="155" text-anchor="middle" fill="#94a3b8" font-size="12">- VPC / Subnets</text>
+  <text x="150" y="173" text-anchor="middle" fill="#94a3b8" font-size="12">- EKS Cluster</text>
+  <text x="150" y="191" text-anchor="middle" fill="#94a3b8" font-size="12">- Jenkins EC2 Instance</text>
+  <text x="150" y="209" text-anchor="middle" fill="#94a3b8" font-size="12">- IAM Roles / SGs</text>
+
+  <!-- Ansible box -->
+  <rect x="40" y="260" width="220" height="120" rx="10" fill="#1e293b" stroke="#f97316" stroke-width="2"/>
+  <text x="150" y="290" text-anchor="middle" fill="#fdba74" font-size="16" font-weight="bold">Ansible</text>
+  <text x="150" y="313" text-anchor="middle" fill="#94a3b8" font-size="12">Configures Jenkins EC2:</text>
+  <text x="150" y="331" text-anchor="middle" fill="#94a3b8" font-size="12">- Install Jenkins, Docker</text>
+  <text x="150" y="349" text-anchor="middle" fill="#94a3b8" font-size="12">- Install kubectl, awscli</text>
+  <text x="150" y="367" text-anchor="middle" fill="#94a3b8" font-size="12">- Configure kubeconfig</text>
+
+  <!-- Arrow terraform -> EC2 -->
+  <line x1="260" y1="150" x2="380" y2="150" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Arrow ansible -> EC2 -->
+  <line x1="260" y1="320" x2="380" y2="230" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Jenkins EC2 box -->
+  <rect x="380" y="100" width="240" height="180" rx="10" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="500" y="130" text-anchor="middle" fill="#86efac" font-size="16" font-weight="bold">Jenkins EC2 Instance</text>
+  <text x="500" y="155" text-anchor="middle" fill="#e2e8f0" font-size="12">Jenkins Controller</text>
+  <text x="500" y="175" text-anchor="middle" fill="#94a3b8" font-size="12">- Runs CI/CD Pipeline</text>
+  <text x="500" y="195" text-anchor="middle" fill="#94a3b8" font-size="12">- Docker build/push</text>
+  <text x="500" y="215" text-anchor="middle" fill="#94a3b8" font-size="12">- kubectl apply to EKS</text>
+  <text x="500" y="235" text-anchor="middle" fill="#94a3b8" font-size="12">- IAM role: EKS access</text>
+  <text x="500" y="255" text-anchor="middle" fill="#94a3b8" font-size="12">- Security Group: 8080/22</text>
+
+  <!-- Arrow jenkins -> dockerhub -->
+  <line x1="620" y1="150" x2="740" y2="90" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Arrow jenkins -> eks -->
+  <line x1="620" y1="230" x2="740" y2="280" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Docker Hub box -->
+  <rect x="740" y="50" width="220" height="90" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <text x="850" y="80" text-anchor="middle" fill="#7dd3fc" font-size="15" font-weight="bold">Docker Hub</text>
+  <text x="850" y="103" text-anchor="middle" fill="#94a3b8" font-size="12">nodejs-app:v&lt;BUILD&gt;</text>
+  <text x="850" y="121" text-anchor="middle" fill="#94a3b8" font-size="12">Image Registry</text>
+
+  <!-- EKS box -->
+  <rect x="740" y="220" width="220" height="180" rx="10" fill="#1e293b" stroke="#eab308" stroke-width="2"/>
+  <text x="850" y="250" text-anchor="middle" fill="#fde047" font-size="16" font-weight="bold">Amazon EKS Cluster</text>
+  <text x="850" y="275" text-anchor="middle" fill="#e2e8f0" font-size="12">Namespace: ivolve</text>
+  <text x="850" y="295" text-anchor="middle" fill="#94a3b8" font-size="12">- nodejs-app Deployment</text>
+  <text x="850" y="313" text-anchor="middle" fill="#94a3b8" font-size="12">- MySQL StatefulSet</text>
+  <text x="850" y="331" text-anchor="middle" fill="#94a3b8" font-size="12">- Ingress + Service</text>
+  <text x="850" y="349" text-anchor="middle" fill="#94a3b8" font-size="12">- ConfigMap / Secret</text>
+  <text x="850" y="367" text-anchor="middle" fill="#94a3b8" font-size="12">- PV / PVC</text>
+
+  <!-- GitHub source -->
+  <rect x="40" y="440" width="220" height="80" rx="10" fill="#1e293b" stroke="#64748b" stroke-width="2"/>
+  <text x="150" y="470" text-anchor="middle" fill="#cbd5e1" font-size="15" font-weight="bold">GitHub Repo</text>
+  <text x="150" y="493" text-anchor="middle" fill="#94a3b8" font-size="12">nodejs-app source + Jenkinsfile</text>
+  <line x1="260" y1="460" x2="380" y2="260" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="4,3"/>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <text x="500" y="540" text-anchor="middle" fill="#64748b" font-size="12">Terraform provisions infra → Ansible configures Jenkins → Jenkins builds &amp; deploys to EKS</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" font-family="Consolas, Menlo, monospace">
+  <rect width="900" height="200" fill="#1e1e1e" rx="6"/>
+  <rect x="0" y="0" width="900" height="28" fill="#333333" rx="6"/>
+  <circle cx="16" cy="14" r="5" fill="#ff5f56"/>
+  <circle cx="34" cy="14" r="5" fill="#ffbd2e"/>
+  <circle cx="52" cy="14" r="5" fill="#27c93f"/>
+  <text x="450" y="19" fill="#cccccc" font-size="12" text-anchor="middle">Console Output — Stage: Editing Deployment YAML</text>
+
+  <g fill="#d4d4d4" font-size="12.5">
+    <text x="16" y="54">+ sed -i s|image: .*|image: mosayed711/nodejs-app:v2.14| CI-CD/lab22/nodejs-app.yaml</text>
+    <text x="16" y="80">+ cat CI-CD/lab22/nodejs-app.yaml | grep image:</text>
+    <text x="16" y="102" fill="#dcdcaa">        image: mosayed711/nodejs-app:v2.14</text>
+    <text x="16" y="150" fill="#6a9955">[Pipeline] // stage — Finished: SUCCESS</text>
+  </g>
+  <text x="16" y="188" fill="#777777" font-size="10">Illustrative mockup — not an actual captured screenshot.</text>
+</svg>
