@@ -67,9 +67,11 @@ pipeline {
         stage('Editing Deployment YAML') {
             steps {
                 sh 'echo "Editing deployment YAML file..."'
-                sh "sed -i \"/mosayed711\\/nodejs-app/s|image: .*|image: ${IMAGE_NAME}:${IMAGE_TAG}|" ${APP_DEPLOYMENT}"
+                sh """
+                    sed -i "/mosayed711\\/nodejs-app/s|image: .*|image: ${IMAGE_NAME}:${IMAGE_TAG}|" ${APP_DEPLOYMENT}
+                """
             }
-        }
+}
 
         stage('Deploy to Kubernetes') {
             steps {
