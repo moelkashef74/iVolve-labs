@@ -28,6 +28,8 @@ The purpose of this repository is to document my progress while gaining practica
 | Lab 18 | [k8s/lab18](k8s/lab18) | Control Pod-to-Pod Traffic via Network Policy | ✅ Completed |
 | Lab 19 | [k8s/lab19](k8s/lab19) | Node-Wide Pod Management with DaemonSet | ✅ Completed |
 | Lab 20 | [k8s/lab20](k8s/lab20) | Securing Kubernetes with RBAC and Service Accounts | ✅ Completed |
+| Lab 21 | [CI-CD/lab21](CI-CD/lab21) | Role-based Authorization | ✅ Completed |
+| Lab 22 | [CI-CD/lab22](CI-CD/lab22) | Jenkins Pipeline for Application Deployment | ✅ Completed |
 
 
 ## Repository Structure
