@@ -44,7 +44,7 @@ spec:
         image: mosayed711/nodejs-app:v2
         resources:
           requests:
-            memory: "0.3Gi"
+            memory: "0.5Gi"
             cpu: "1"
           limits:
             memory: "2Gi"
