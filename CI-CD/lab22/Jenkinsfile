@@ -6,7 +6,7 @@ pipeline {
         IMAGE_TAG = "v2.${BUILD_NUMBER}"
         CLUSTER_NAME = 'eks-test-cluster'
         AWS_REGION = 'us-east-1'
-        APP_DEPLOYMENT = 'nodejs-app.yaml'
+        APP_DEPLOYMENT = 'CI-CD/lab22/nodejs-app.yaml'
         CLUSTER_ENDPOINT = 'https://78709925DDB4ABF9A5C4CA18988D4296.gr7.us-east-1.eks.amazonaws.com'
     }
 
