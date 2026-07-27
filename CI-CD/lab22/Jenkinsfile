@@ -17,9 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                pwd
-                ls -la
-                ls -la kubernetes-app
+                echo "Building Docker image..."
                 docker build -t $IMAGE_NAME:$IMAGE_TAG .
                 '''
             }
