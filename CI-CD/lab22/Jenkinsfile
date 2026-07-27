@@ -30,6 +30,7 @@ pipeline {
                 trivy image \
                 --cache-dir /tmp/trivy-cache \
                 --timeout 10m \
+                --scanners vuln \
                 --severity HIGH,CRITICAL \
                 $IMAGE_NAME:$IMAGE_TAG
                 """
